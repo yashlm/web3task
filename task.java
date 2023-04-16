@@ -1,5 +1,5 @@
 class Car {
-    
+
     String make;
     String model;
     int year, x, y, z, speedx , speedy, speedz;
@@ -36,12 +36,20 @@ class Car {
         z += speedz;
     }
 
+    boolean detect_if_collision(Car obj)
+    {
+        double t1   = (obj . x  -  x) / (double)  ( speedx - obj.speedx);
+        double t2   = (obj . y  -  y) / (double)  ( speedy - obj.speedy);
+        double t3   = (obj . z  -  z) / (double)  ( speedz - obj.speedz);
+        if (t1  == t2 &&  t1  == t3)
+            return true;
+        else
+            return false;
+    }
+
     boolean detect_collision(Car obj)
     {
-        double t1=(obj.x-x)/(double)(speedx-obj.speedx);
-        double t2=(obj.y-y)/(double)(speedy-obj.speedy);
-        double t3=(obj.z-z)/(double)(speedz-obj.speedz);
-        if (t1==t2 && t1==t3)
+        if(obj.x == x && obj.y == y && obj.z == z)
             return true;
         else
             return false;
@@ -49,7 +57,6 @@ class Car {
 
     int time_to_collision(Car obj)
     {
-        System.out.println(x + " " + obj.x + " " + speedx + " " + obj.speedx);
         return (obj.x - x) / (speedx - obj.speedx);
     }
     
@@ -70,13 +77,18 @@ class Car {
         Car car2 = new Car("Hyundai", "Deham", 2003, 5, 6, 7, 10,5,4);
         car1.display();
         car2.display();
-        boolean p=car1.detect_collision(car2);
+        boolean p = car1.detect_if_collision(car2);
+        boolean q = car1.detect_collision(car2);
         int t = car1.time_to_collision(car2);
-        if (p)
+        if (q)
             System.out.println("Collision!!");
         else
             System.out.println("No Collision");
-        System.out.println("Time to collision: " + t);    
+        if (p)
+            System.out.println("Collision will occur");
+        else
+            System.out.println("Collision won't occur");    
+        System.out.println("Time to collision: " + t + "hour");    
         car1.accelerate(2, 3, 4);
         car2.brake(6, 2, 2);
         car1.display();
